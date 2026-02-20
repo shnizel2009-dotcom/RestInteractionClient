@@ -1,7 +1,0 @@
-D:\Java\Projects\rest-interaction\src\main\java\paymentservice\restinteraction\client\BankAccountFeignClient.java
-D:\Java\Projects\rest-interaction\src\main\java\paymentservice\restinteraction\config\RestInteractionConfig.java
-D:\Java\Projects\rest-interaction\src\main\java\paymentservice\restinteraction\controller\RestInteractionController.java
-D:\Java\Projects\rest-interaction\src\main\java\paymentservice\restinteraction\model\dto\BankAccountCreateRequest.java
-D:\Java\Projects\rest-interaction\src\main\java\paymentservice\restinteraction\model\dto\BankAccountResponse.java
-D:\Java\Projects\rest-interaction\src\main\java\paymentservice\restinteraction\RestInteractionApplication.java
-D:\Java\Projects\rest-interaction\src\main\java\paymentservice\restinteraction\service\RestInteractionService.java

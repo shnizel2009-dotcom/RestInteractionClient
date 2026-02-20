@@ -13,18 +13,8 @@ import paymentservice.restinteraction.model.dto.BankAccountResponse;
 
 @Slf4j
 @Service
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class RestInteractionService {
-
-    public RestInteractionService(RestTemplate restTemplate,
-                                  RestClient restClient,
-                                  BankAccountFeignClient feignClient,
-                                  WebClient webClient) {
-        this.restTemplate = restTemplate;
-        this.restClient = restClient;
-        this.feignClient = feignClient;
-        this.webClient = webClient;
-    }
 
     @Value("${app.api.base-url}")
     private String baseUrl;
