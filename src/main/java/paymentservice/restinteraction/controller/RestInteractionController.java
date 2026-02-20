@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import paymentservice.restinteraction.model.dto.BankAccountCreateRequest;
 import paymentservice.restinteraction.model.dto.BankAccountResponse;
+import paymentservice.restinteraction.service.AccountAggregatorService;
 import paymentservice.restinteraction.service.RestInteractionService;
+
+import java.util.List;
 
 
 @RestController
@@ -13,6 +16,7 @@ import paymentservice.restinteraction.service.RestInteractionService;
 public class RestInteractionController {
 
     private final RestInteractionService restInteractionService;
+    private final AccountAggregatorService accountAggregatorService;
 
     @GetMapping("/test")
     public String test() {
@@ -57,5 +61,13 @@ public class RestInteractionController {
     @PostMapping("/web-client")
     public BankAccountResponse testWebClientPost(@RequestBody BankAccountCreateRequest request) {
         return restInteractionService.postWithWebClient(request);
+    }
+
+    @GetMapping("/aggregator/{id1}/{id2}/{id3}")
+    public List<BankAccountResponse> testAggregator(
+            @PathVariable("id1") Long id1,
+            @PathVariable("id2") Long id2,
+            @PathVariable("id3") Long id3) {
+        return accountAggregatorService.getThreeAccounts(id1, id2, id3);
     }
 }
