@@ -1,7 +1,0 @@
-paymentservice\restinteraction\config\RestInteractionConfig.class
-paymentservice\restinteraction\model\dto\BankAccountCreateRequest.class
-paymentservice\restinteraction\client\BankAccountFeignClient.class
-paymentservice\restinteraction\service\RestInteractionService.class
-paymentservice\restinteraction\RestInteractionApplication.class
-paymentservice\restinteraction\model\dto\BankAccountResponse.class
-paymentservice\restinteraction\controller\RestInteractionController.class
