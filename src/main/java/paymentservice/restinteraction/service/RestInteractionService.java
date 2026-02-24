@@ -27,20 +27,24 @@ public class RestInteractionService {
     private final BankAccountFeignClient feignClient;
     private final WebClient webClient;
 
-    public BankAccountResponse getWithRestTemplate(Long id) {
-        URI url = UriComponentsBuilder
+    private URI createUri(String path, Object... pathVars) {
+        UriComponentsBuilder builder = UriComponentsBuilder
                 .fromHttpUrl(baseUrl)
-                .path("/accounts/{id}")
-                .build(id);
+                .path(path);
+
+        return (pathVars == null || pathVars.length == 0)
+                ? builder.build().toUri()
+                : builder.buildAndExpand(pathVars).toUri();
+    }
+
+    public BankAccountResponse getWithRestTemplate(Long id) {
+        URI url = createUri("/accounts/{id}", id);
         return restTemplate.getForObject(url, BankAccountResponse.class);
     }
 
     public BankAccountResponse getWithRestClient(Long id) {
         return restClient.get()
-                .uri(UriComponentsBuilder
-                        .fromHttpUrl(baseUrl)
-                        .path("/accounts/{id}")
-                        .build(id))
+                .uri(createUri("/accounts/{id}", id))
                 .retrieve()
                 .body(BankAccountResponse.class);
     }
@@ -51,31 +55,20 @@ public class RestInteractionService {
 
     public BankAccountResponse getWithWebClient(Long id) {
         return webClient.get()
-                .uri(UriComponentsBuilder
-                        .fromHttpUrl(baseUrl)
-                        .path("/accounts/{id}")
-                        .build(id))
+                .uri(createUri("/accounts/{id}", id))
                 .retrieve()
                 .bodyToMono(BankAccountResponse.class)
                 .block();
     }
 
     public BankAccountResponse postWithRestTemplate(BankAccountCreateRequest request) {
-        URI url = UriComponentsBuilder
-                .fromHttpUrl(baseUrl)
-                .path("/accounts")
-                .build()
-                .toUri();
+        URI url = createUri("/accounts");
         return restTemplate.postForObject(url, request, BankAccountResponse.class);
     }
 
     public BankAccountResponse postWithRestClient(BankAccountCreateRequest request) {
         return restClient.post()
-                .uri(UriComponentsBuilder
-                        .fromHttpUrl(baseUrl)
-                        .path("/accounts")
-                        .build()
-                        .toUri())
+                .uri(createUri("/accounts"))
                 .body(request)
                 .retrieve()
                 .body(BankAccountResponse.class);
@@ -87,23 +80,10 @@ public class RestInteractionService {
 
     public BankAccountResponse postWithWebClient(BankAccountCreateRequest request) {
         return webClient.post()
-                .uri(UriComponentsBuilder
-                        .fromHttpUrl(baseUrl)
-                        .path("/accounts")
-                        .build()
-                        .toUri())
+                .uri(createUri("/accounts"))
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(BankAccountResponse.class)
                 .block();
-    }
-
-    public BankAccountResponse getSomeAccounts(BankAccountCreateRequest request) {
-        URI url = UriComponentsBuilder
-                .fromHttpUrl(baseUrl)
-                .path("/accounts")
-                .build()
-                .toUri();
-        return restTemplate.postForObject(url, request, BankAccountResponse.class);
     }
 }

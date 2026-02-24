@@ -63,11 +63,16 @@ public class RestInteractionController {
         return restInteractionService.postWithWebClient(request);
     }
 
-    @GetMapping("/aggregator/{id1}/{id2}/{id3}")
+    @GetMapping("/aggregator")
     public List<BankAccountResponse> testAggregator(
-            @PathVariable("id1") Long id1,
-            @PathVariable("id2") Long id2,
-            @PathVariable("id3") Long id3) {
+            @RequestParam("id1") Long id1,
+            @RequestParam("id2") Long id2,
+            @RequestParam("id3") Long id3) {
         return accountAggregatorService.getThreeAccounts(id1, id2, id3);
+    }
+
+    @GetMapping("/get-call-time")
+    public String testGetCallTime() {
+        return accountAggregatorService.getCallTime();
     }
 }
