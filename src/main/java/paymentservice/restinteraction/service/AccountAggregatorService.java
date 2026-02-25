@@ -53,6 +53,27 @@ public class AccountAggregatorService {
         return result;
     }
 
+//    public List<BankAccountResponse> getThreeAccounts(List<Long> idList) {
+//
+//        List<BankAccountResponse> accounts = new ArrayList<>();
+//
+//        beforeCall = LocalDateTime.now();
+//        log.info("Fix before call: {}", LocalDateTime.now().format(fmt));
+//
+//        for(Long id : idList) {
+//            accounts.add((restInteractionService.getWithRestTemplate(id)));
+//        }
+//        log.info("Fix after call: {}", LocalDateTime.now().format(fmt));
+//        afterCall = LocalDateTime.now();
+//        initDuration();
+//        log.info(String.format(
+//                "Last call duration (sec): %d.%09d",
+//                duration.getSeconds(),
+//                duration.getNano()));
+//
+//        return accounts;
+//    }
+
     public String getCallTime() {
         initDuration();
         return String.format(
