@@ -2,6 +2,7 @@ package paymentservice.restinteraction.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import paymentservice.restinteraction.client.BankAccountFeignClient;
@@ -51,12 +52,13 @@ public class AccountAggregatorService {
         return result;
     }
 
+    @Cacheable(cacheNames = "accounts", key = "#idList")
     public List<BankAccountResponse> getThreeAccountsViaFeign(List<Long> idList) {
         if (idList == null || idList.isEmpty()) {
             return List.of();
         }
 
-        initBeforeCall();
+//        initBeforeCall();
 
         List<CompletableFuture<BankAccountResponse>> futures = idList.stream()
                 .map(id -> CompletableFuture.supplyAsync(() -> feignClient.getAccountById(id))
@@ -69,7 +71,8 @@ public class AccountAggregatorService {
                 .map(CompletableFuture::join)
                 .collect(Collectors.toList());
 
-        initAfterCall();
+//        initAfterCall();
+        log.info("CACHE MISS -> calling payment-service via Feign, ids={}", idList);
 
         return result;
     }

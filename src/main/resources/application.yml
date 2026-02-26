@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: rest-interaction
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+app:
+  api:
+    base-url: http://localhost:8089/api/v1

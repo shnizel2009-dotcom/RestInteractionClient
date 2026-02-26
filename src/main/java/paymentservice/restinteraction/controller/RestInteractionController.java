@@ -1,6 +1,7 @@
 package paymentservice.restinteraction.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import paymentservice.restinteraction.model.dto.BankAccountCreateRequest;
 import paymentservice.restinteraction.model.dto.BankAccountResponse;
@@ -9,7 +10,7 @@ import paymentservice.restinteraction.service.RestInteractionService;
 
 import java.util.List;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/client-test")
 @RequiredArgsConstructor
@@ -70,7 +71,15 @@ public class RestInteractionController {
 
     @PostMapping("/get-list-of-users-feign")
     public List<BankAccountResponse> testAggregatorFeign(@RequestBody List<Long> userIdList) {
-        return accountAggregatorService.getThreeAccountsViaFeign(userIdList);
+        Long start = System.nanoTime();
+
+        List<BankAccountResponse> result =
+                accountAggregatorService.getThreeAccountsViaFeign(userIdList);
+
+        Long ms = (System.nanoTime() - start) / 1_000_000;
+        log.info("Aggregator total duration {} ms (ids={})", ms, userIdList);
+
+        return result;
     }
 
     @GetMapping("/get-call-time")
